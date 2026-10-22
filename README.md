@@ -45,3 +45,7 @@ Live validation on October 21, 2026 covered Meme Press image export, Still task 
 ### Still's visual identity
 
 Still uses a lavender dotted workspace, a cream task sheet, mint progress panel, coral sticker and a butter-yellow reminder note. Completion updates the totals and gives the original CSS flower a short celebratory motion. Task storage, legacy migration and filters are unchanged. All artwork and effects use native CSS with reduced-motion support; there are no new dependencies or paid assets.
+
+### Meme Press's visual identity
+
+Meme Press is a pink-and-ink internet print shop: a full-width press bed, a slightly tilted paper proof, registration marks and three numbered editing stations. Acid-green export controls and an original SVG smile bring the playful identity into the tool. Short entrance and hover effects honor reduced-motion preferences. The Canvas logic, image limits, private local processing and PNG output are unchanged; no library, font service or paid asset was added.
