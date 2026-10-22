@@ -37,3 +37,5 @@ npm audit --prefix apps/field/api --audit-level=low
 ```
 
 FIELD integration tests use a disposable local MongoDB instance, never the Azure database. They verify concurrency across independent instances, shared backoff, provider revalidation, no geometry retention and fixed cache-slot replacement. The CI workflow uses Node.js 22. After deployment, verify the health route, an Interval fictional registration and a FIELD city forecast in a browser before announcing the demo as live.
+
+FIELD pins MongoDB driver 6.21 because the existing Cosmos endpoint is Mongo 4.2. Driver 7.6+ requires MongoDB 4.4/wire version 9; major driver proposals are held until the backend supports them. Patch/minor updates and vulnerability alerts remain enabled. See the [official compatibility tables](https://www.mongodb.com/docs/drivers/compatibility/).

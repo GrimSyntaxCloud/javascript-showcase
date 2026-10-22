@@ -15,3 +15,7 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
+    # Cosmos Mongo 4.2: driver 7.6+ requires MongoDB 4.4/wire version 9.
+    ignore:
+      - dependency-name: mongodb
+        update-types: [version-update:semver-major]
