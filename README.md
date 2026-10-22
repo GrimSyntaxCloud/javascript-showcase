@@ -41,3 +41,7 @@ Public repository and GitHub Pages hosting use the free offering. The original `
 Separate workflows test/audit each API, package only production dependencies, and deploy to `azure-interval` or `azure-field` environments. The deployment jobs remain disabled until the corresponding repository variable is set to `true` and that environment's deployment token is present. Publishing these packages requires verifying existing Azure Free capacity first.
 
 Live validation on October 21, 2026 covered Meme Press image export, Still task persistence, Interval's actual fictional form submission and unchanged sample charts, and FIELD's manual city lookup, live forecast, unit conversion, shared cache and invalid-coordinate response. Fifteen automated behavior/integration tests pass; both managed API dependency audits report no known vulnerabilities at that time.
+
+### Still's visual identity
+
+Still uses a lavender dotted workspace, a cream task sheet, mint progress panel, coral sticker and a butter-yellow reminder note. Completion updates the totals and gives the original CSS flower a short celebratory motion. Task storage, legacy migration and filters are unchanged. All artwork and effects use native CSS with reduced-motion support; there are no new dependencies or paid assets.

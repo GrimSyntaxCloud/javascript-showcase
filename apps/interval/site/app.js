@@ -5,3 +5,11 @@ fetch('/api/statistics').then(r=>{if(!r.ok)throw Error();return r.json();}).then
 document.querySelectorAll('[data-stat]').forEach(b=>b.onclick=()=>{if(!stats)return;document.querySelectorAll('[data-stat]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));chart(b.dataset.stat);});
 document.getElementById('sample').onclick=()=>{const values={username:'Alex Demo',email:'alex@example.com',phone:'202-555-0142',age:'22',profession:'college',experience:'2',comment:'Creative coding and meeting other makers.'};for(const [name,value] of Object.entries(values))form.elements.namedItem(name).value=value;status.textContent='Fictional details filled. You can now try the form.';form.elements.username.focus();};
 form.onsubmit=async event=>{event.preventDefault();const button=document.getElementById('submit');button.disabled=true;status.textContent='Checking your fictional registration…';try{const response=await fetch('/api/registration',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(form)))});if(!response.ok)throw Error(response.status===400?'Please check your details and try again.':'The demo server could not complete this request.');const data=await response.json();status.textContent=data.message;}catch(error){status.textContent=error.message==='Failed to fetch'?'The demo API is offline. Try again shortly.':error.message;}finally{button.disabled=false;}};
+
+// Optical artwork is decorative; its motion is optional and respects the OS preference.
+const motionButton=document.getElementById('motion'),motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+let motionEnabled=!motionPreference.matches;
+function updateMotion(){document.documentElement.dataset.motion=motionEnabled?'running':'paused';motionButton.setAttribute('aria-pressed',String(motionEnabled));motionButton.textContent=motionPreference.matches?'Motion: reduced':`Motion: ${motionEnabled?'on':'off'}`;motionButton.disabled=motionPreference.matches;}
+motionButton.onclick=()=>{motionEnabled=!motionEnabled;updateMotion();};
+motionPreference.addEventListener('change',()=>{motionEnabled=!motionPreference.matches;updateMotion();});
+updateMotion();
