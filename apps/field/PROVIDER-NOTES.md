@@ -29,3 +29,9 @@ No Nominatim service is used. Open-Meteo was evaluated but not used because its 
 The frontend calls its same-origin `/api/weather` managed Azure Function. The API uses an existing approved free Cosmos Mongo database for shared cache and rate-limit state; static GitHub Pages alone cannot execute it. The deployment workflow creates no Azure resource and requires an existing Static Web Apps Free resource, scoped database credential, environment-specific deployment token and explicit deployment enable variable. No client can select an arbitrary upstream endpoint.
 
 MET Norway permits low-volume simple browser CORS requests under conditions, but recommends a caching backend. This implementation uses that backend to make identification and cache compliance explicit. Provider terms can change; recheck them before materially increasing traffic. No service-level guarantee is provided. Nothing here enables paid resources or accepts a new paid agreement.
+
+## Atmospheric interface redesign
+
+The frontend uses a decorative aurora, curved horizon, native CSS weather symbols and large temperature typography. The sky illustration is explicitly an atmospheric impression, not additional forecast data. No map, paid assets, remote fonts or animation libraries are used. A sky-motion control pauses the continuous decorative effect; the operating system’s reduced-motion setting disables it automatically.
+
+City search, the bundled GeoNames catalog, manual location choice, optional browser geolocation, Fahrenheit/Celsius conversions, metrics, API error handling and provider attribution remain intact. No backend, cache, credential, retention or throughput configuration changed for this design.
