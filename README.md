@@ -30,3 +30,12 @@ Tests cover canvas scaling, invalid image rejection, caption wrapping, task life
 Pushes to `main` test and publish `dist/` through GitHub Actions to GitHub Pages. Pull requests check without publishing. Actions are pinned to commit hashes and Dependabot checks them weekly. Only `index.html`, `meme-press/` and `still/` are uploaded; no backend code is included.
 
 Public repository and GitHub Pages hosting use the free offering. The original `javaScript` repository is preserved.
+
+## Managed API demos
+
+`apps/interval` and `apps/field` are separate Azure Static Web Apps packages. They are **not** included in the GitHub Pages artifact. Both use managed Node.js 22 APIs and are intended for the existing free Azure setup; no App Service plan, premium Functions, paid geocoding service or Application Insights is required.
+
+- **Interval:** fictional event form with server-side validation and original fixed statistics. Submission data is discarded, never logged or persisted. No database or app settings required.
+- **FIELD:** MET Norway forecast gateway plus local GeoNames city catalog. Shared Mongo cache on the existing free Cosmos database enforces a global request gate and fixed-size cache across API instances. See [deployment notes](apps/DEPLOYMENT.md) and [provider attribution](apps/field/PROVIDER-NOTES.md).
+
+Separate workflows test/audit each API, package only production dependencies, and deploy to `azure-interval` or `azure-field` environments. The deployment jobs remain disabled until the corresponding repository variable is set to `true` and that environment's deployment token is present. Publishing these packages requires verifying existing Azure Free capacity first.

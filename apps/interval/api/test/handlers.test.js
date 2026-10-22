@@ -1,0 +1,7 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const handlers=require('../handlers');
+const data={username:'Alex Demo',email:'alex@example.com',phone:'202-555-0142',age:'22',profession:'college',experience:'2',comment:'Learning'};
+function request(body,contentType='application/json'){return {headers:new Headers({'content-type':contentType}),text:async()=>typeof body==='string'?body:JSON.stringify(body)};}
+test('real registration handler validates required fields and retains discard-only behavior',async()=>{assert.equal((await handlers.registration(request({}))).status,400);assert.equal((await handlers.registration(request({...data,age:26}))).status,400);const result=await handlers.registration(request(data));assert.equal(result.status,200);assert.match(result.jsonBody.message,/discarded/);assert.equal(result.headers['Cache-Control'],'no-store');});
+test('handler rejects malformed JSON, oversized bodies and non-JSON payloads',async()=>{assert.equal((await handlers.registration(request('{'))).status,400);assert.equal((await handlers.registration(request('x'.repeat(17000)))).status,413);assert.equal((await handlers.registration(request(data,'text/plain'))).status,415);});
+test('statistics remain original fixed examples after a demo submission',async()=>{await handlers.registration(request(data));assert.deepEqual((await handlers.statistics()).jsonBody,{experience:[35,40,25],profession:[30,40,20,10],age:[30,60,10]});assert.equal((await handlers.health()).jsonBody.persistentRegistrations,false);});

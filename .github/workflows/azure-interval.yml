@@ -1,0 +1,66 @@
+name: Check and deploy interval managed demo
+on:
+  push:
+    branches: [main]
+    paths: ['apps/interval/**', 'scripts/package-azure.mjs', '.github/workflows/azure-interval.yml']
+  pull_request:
+    paths: ['apps/interval/**', 'scripts/package-azure.mjs', '.github/workflows/azure-interval.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/interval/api/package-lock.json
+      - run: npm ci --prefix apps/interval/api --no-fund --no-audit
+      - run: npm audit --prefix apps/interval/api --audit-level=low
+      - run: npm test --prefix apps/interval/api
+      - run: npm prune --omit=dev --prefix apps/interval/api --no-fund --no-audit
+      - run: node scripts/package-azure.mjs interval
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: azure-interval
+          path: release/interval
+          retention-days: 3
+  deploy:
+    needs: checks
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.AZURE_INTERVAL_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: azure-interval
+    concurrency:
+      group: azure-interval
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: azure-interval
+          path: release/interval
+      - uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9 # v1
+        id: webapp
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: release/interval/site
+          api_location: release/interval/api
+          output_location: ''
+          skip_app_build: true
+          skip_api_build: true
+      - name: Verify managed API
+        env:
+          APP_URL: ${{ steps.webapp.outputs.static_web_app_url }}
+        run: |
+          for attempt in $(seq 1 12); do
+            if curl --fail --silent --show-error --max-time 10 "${APP_URL%/}/api/health"; then exit 0; fi
+            sleep 5
+          done
+          exit 1
