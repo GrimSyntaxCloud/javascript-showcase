@@ -3,3 +3,15 @@
 @media(max-width:760px){header,main,footer{width:90%}header{gap:15px;padding:22px 0}.brand{font-size:30px}.header-note{display:none}.header-actions{gap:15px;font-size:11px}#motion{font-size:9px;padding:8px 10px}.masthead{padding:20px 0;font-size:8px;letter-spacing:1px}.masthead>span{display:none}.instrument{display:flex;flex-direction:column;gap:22px}.conditions{min-height:480px;padding:28px 23px 0;border-radius:22px}.place{max-width:100%}h1{font-size:47px;letter-spacing:-2px}#region{font-size:8px;letter-spacing:1px;margin-bottom:15px}#coordinates{font-size:9px}.temperature{font-size:clamp(92px,27vw,170px);letter-spacing:-8px}.temp-unit{font-size:25px;margin:8px 0 0 10px}.reading{padding:75px 0 29px}.condition-meta{display:block;margin-top:16px}#summary{font-size:18px}#updated{margin-top:9px}.sun{width:90px;height:90px;right:12%;top:30%}.cloud{width:120px;right:8%;top:43%}.sky[data-sky=rain] .rain,.sky[data-sky=storm] .rain,.sky[data-sky=snow] .rain{right:10%;top:53%;width:90px}.sky-caption{display:none}.orbits{height:550px;bottom:-415px;left:-40%;width:180%}.aurora{top:-20%;left:30%;width:120%}.horizon-note{font-size:7px;letter-spacing:1px;padding:17px 0}aside{padding:23px;width:100%;border-radius:22px}.rail-heading{gap:9px}h2{font-size:25px;margin:15px 0 24px}h2 br{display:none}.unit-row{justify-content:start;gap:25px}.quick{gap:8px}.quick button{font-size:11px;padding:10px 12px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 0;margin-top:27px;padding:27px 0}.metrics>div{padding:0 0 0 18px}.metrics>div:nth-child(odd){padding-left:0;border-right:1px solid var(--line)}.metrics>div:nth-child(even){border-right:0}.metrics>div>span{font-size:8px;letter-spacing:.8px;gap:8px}.metrics strong{font-size:25px;letter-spacing:-1px;margin-top:14px}.metrics p{font-size:10px;max-width:140px}.note{display:block;padding:29px 0}.note>span{font-size:23px}.note p{margin-top:17px;font-size:10px;max-width:none}footer{flex-direction:column;gap:17px;font-size:8px;padding-top:23px}}
 @media(max-width:360px){.header-actions{gap:8px}.header-actions>a{font-size:10px}#motion{font-size:8px;padding:8px}.brand{font-size:26px}.conditions{padding:24px 19px 0}.temperature{font-size:92px;letter-spacing:-6px}.temp-unit{font-size:21px}.metrics strong{font-size:23px}aside{padding:20px}.unit-row{gap:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+/* Vector arrows keep their shape across Safari, system fonts, and emoji sets. */
+svg.compat-arrow {
+  display: inline-block;
+  position: static;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+}
